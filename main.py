@@ -26,9 +26,6 @@ def check_exists(n):
 # just for fun user prompt extracted to a variable
 user_prompt = 'Type "add", "show", "edit", "complete" or "exit": '
 
-# initiate empty todos list
-todos = []
-
 # infinite loop, do not forget to exit! :)
 while True:
     # take user input and strip out [possible] empty spaces, then convert to lower case
@@ -37,13 +34,28 @@ while True:
     # redirect user to a chosen action or warn about wrong command
     match user_action:
         case 'add':
-            todo = input("Enter a todo: ")
+            todo = input("Enter a todo: ") + "\n"
+
+            file = open('todos.txt', 'r')
+            todos = file.readlines()
+            file.close()
+
             todos.append(todo)
+
+            file = open('todos.txt', 'w')
+            file.writelines(todos)
+            file.close()
         case 'show':
             # show todos list
             print("Your todos so far:")
+
+            file = open('todos.txt', 'r')
+            todos = file.readlines()
+            file.close()
+
+            # using the same for loop as before to be able to format output to the likings
             for index, element in enumerate(todos):
-                print(f"{index+1}. {element}")
+                print(f"{index+1}. {element}", end='')
         case "edit":
             # ask user about to-do to edit and take the input
             n = input("Which one? Give me the number of a todo: ")
