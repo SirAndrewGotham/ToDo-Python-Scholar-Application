@@ -61,10 +61,19 @@ while True:
                 todos[num] = input("What it should be now? ")
             else:
                 # if inserted number has no corresponding index, notify user and skip action
-                print(f"There's no todo with the number {num+1}. Please try again.")
+                print(f"There's no todo with the number {num+1}. Please try again. > ")
                 continue
-        # mark as complete to delete a todo
         case 'complete':
+            n = input(f"Which one todo you want to mark as read and delete from the list?\nPlease give me the number of a todo: ")
+            # TODO  - int verification via function
+            n = int(n)-1 # compensation for the difference in numbers
+            # TODO - existance verification via function
+            confirm = input(f"Please type 'yes' (without quotes) to confirm that you really want to delete todo:\n{todos[n]}\nYou won't be able to restore it other then by typing again. > ").lower().strip()
+            if confirm == "yes":
+                print(f"You have just completed your todo\n{todos[n]}\nIt has been successfully deleted from your todos list.")
+                todos.pop(n)
+            else:
+                print("You didn't confirm by typing 'yes' (without quotation marks), nothing has been deleted from your todos list.")
             continue
         # if user chooses to exit
         case 'exit':
