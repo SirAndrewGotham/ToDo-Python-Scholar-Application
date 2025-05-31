@@ -15,6 +15,14 @@ def check_if_number(n):
         # continue
         return False
 
+# a function to verify that requested todo exists
+def check_exists(n):
+    # check if the number provided corresponds to an existing index
+    if 0 <= num < len(todos):
+        return True
+    else:
+        return False
+
 # just for fun user prompt extracted to a variable
 user_prompt = 'Type "add", "show", "edit", "complete" or "exit": '
 
@@ -28,7 +36,6 @@ while True:
 
     # redirect user to a chosen action or warn about wrong command
     match user_action:
-        # add new todo
         case 'add':
             todo = input("Enter a todo: ")
             todos.append(todo)
@@ -40,29 +47,21 @@ while True:
         case "edit":
             # ask user about to-do to edit and take the input
             n = input("Which one? Give me the number of a todo: ")
-            # # verify that the input is of type int
-            # try:
-            #     val = int(n)
-            # except ValueError:
-            #     # skip the action if input is not an integer with corresponding notice
-            #     print("I can accept numbers only. Please try again.")
-            #     continue
-            int_verification = check_if_number(n)
-            if int_verification == True:
+            # verify that the input is of type int
+            # if user input is integer, goon with editing, else break with appropriate notification
+            if check_if_number(n) == True:
+                # make it 1 number less due to indexes starting at 0
                 num = int(n)-1
             else:
                 print("I can accept numbers only. Please try again.")
                 continue
-            # if input is integer all right, convert it into integer explicitly
-            # make it 1 number less due to indexes starting at 0
-            # num = int(n)-1
-            # check if inserted number corresponds to an existing index
-            if 0 <= num < len(todos):
+            # verify existance of the requested to-do
+            if check_exists(n) == True:
                 print(f"You are editing todo:\n{num+1}. {todos[num]}\n(todo number is not a part of your todo)")
                 todos[num] = input("What it should be now? ")
             else:
                 # if inserted number has no corresponding index, notify user and skip action
-                print(f"There's no todo with the number {num}. Please try again.")
+                print(f"There's no todo with the number {num+1}. Please try again.")
                 continue
         # mark as complete to delete a todo
         case 'complete':
