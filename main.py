@@ -6,7 +6,7 @@
 from functions import check_if_number, check_exists
 
 # just for fun user prompt with commands extracted to a variable
-user_prompt = f'Type "add", "show", "edit", "complete" or "exit".\nYou can add new items iiemdiately by typing them right after the "add" coomand, all in one line,\nlike so: "add New todo" > '
+user_prompt = f'Please type "add", "show", "edit", "complete" or "exit" command.\nYou can add new items and edit or complete existing ones immediately by typing them right after the "add" or  "edit" command,\nall in one line, like so: "add New todo" or "edit 7" (for example).\nPlease make your choice now : '
 
 # infinite loop, do not forget to exit! :)
 while True:
@@ -38,8 +38,13 @@ while True:
         for index, element in enumerate(todos):
             print(f"{index+1}. {element.strip('\n')}")
     elif "edit" in user_action:
-        # ask user about to-do to edit and take the input
-        n = input("Which one? Give me the number of a todo: ")
+        # FIRST, get number after EDIT command, if exists, then check
+        if user_action[5:] == '':
+            # ask user about to-do to edit and take the input
+            n = input("Which one? Give me the number of a todo: ")
+        else:
+            n = user_action[5:]
+
         # verify that the input is of type int
         # if user input is integer, goon with editing, else break with appropriate notification
         if check_if_number(n) == True:
@@ -63,11 +68,19 @@ while True:
             # write changes to the file
             with open('todos.txt', 'w') as file:
                 file.writelines(todos)
+
+            print(f"Todo {num+1} changed successfully")
         else: # if requested to-do # does not exist
             print(f"There's no todo with the number {num+1}. Please try again.")
             continue
     elif "complete" in user_action:
-        n = input(f"Which one todo you want to mark as read and delete from the list?\nPlease give me the number of a todo: ")
+        # FIRST, get number after the COMPLETE command, if exists, then check
+        if user_action[9:] == '':
+            # ask user about to-do to complete and take the input
+            n = input(f"Which one todo you want to mark as read and delete from the list?\nPlease give me the number of a todo: ")
+        else:
+            n = user_action[9:]
+
         if check_if_number(n) == True:
             n = int(n)
             # make it 1 number less due to indexes starting at 0
