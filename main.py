@@ -18,22 +18,19 @@ while True:
         case 'add':
             todo = input("Enter a todo: ") + "\n"
 
-            file = open('todos.txt', 'r')
-            todos = file.readlines()
-            file.close()
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
 
             todos.append(todo)
 
-            file = open('todos.txt', 'w')
-            file.writelines(todos)
-            file.close()
+            with open('todos.txt', 'w') as file:
+                file.writelines(todos)
         case 'show':
             # show todos list
             print("Your todos so far:")
 
-            file = open('todos.txt', 'r')
-            todos = file.readlines()
-            file.close()
+            with open('todos.txt', 'r') as file:
+                todos = file.readlines()
 
             # using the same for loop as before to be able to format output to the likings
             # list comprehension to remove excessive carrier return at the end
@@ -54,35 +51,53 @@ while True:
             else:
                 print("I can accept numbers only. Please try again.")
                 continue
-            # verify existance of the requested to-do
+            # verify existence of the requested to-do
             if check_exists(n) == True:
-                file = open('todos.txt', 'r') # open file for reading
-                old_content = file.read() # full old content
-                old_text = old_content.splitlines()[num] # content of the requested line
-                file.close() # close file after reading
+                with open('todos.txt', 'r') as file: # open file for reading
+                    old_content = file.read() # full old content
+                    old_text = old_content.splitlines()[num] # content of the requested line
+
                 # notice to the user, what is being edited
                 print(f"You are editing todo:\n{num+1}. {old_text}\n(todo number is not a part of your todo)")
                 # prompt for a new to-do content
                 new_text = input("What it should be now? ")
                 # replace old to-do with the new one
                 new_content = old_content.replace(old_text,new_text)
-                # write changes to the file
-                file = open('todos.txt', 'w')
-                file.writelines(new_content)
-                file.close()
 
-            # print(f"You are editing todo:\n{num+1}. {todos[num]}\n(todo number is not a part of your todo)")
-                # todos[num] = input("What it should be now? ")
-                # print(old_todos)
-            else:
-                # if inserted number has no corresponding index, notify user and skip action
+                # write changes to the file
+                with open('todos.txt', 'w') as file:
+                    file.writelines(new_content)
+            else: # if requested to-do # does not exist
                 print(f"There's no todo with the number {num+1}. Please try again.")
                 continue
         case 'complete':
             n = input(f"Which one todo you want to mark as read and delete from the list?\nPlease give me the number of a todo: ")
-            # TODO  - int verification via function
-            n = int(n)-1 # compensation for the difference in numbers
+            if check_if_number(n) == True:
+                n = int(n)
+                # make it 1 number less due to indexes starting at 0
+                num = int(n)-1
+            else:
+                print("I can accept numbers only. Please try again.")
+                continue
             # TODO - existance verification via function
+            # if check_exists(n) == True:
+            #     with open('todos.txt', 'r') as file: # open file for reading
+            #         old_content = file.read() # full old content
+            #         old_text = old_content.splitlines()[num] # content of the requested line
+            #
+            #     # notice to the user, what is being edited
+            #     print(f"You are editing todo:\n{num+1}. {old_text}\n(todo number is not a part of your todo)")
+            #     # prompt for a new to-do content
+            #     new_text = input("What it should be now? ")
+            #     # replace old to-do with the new one
+            #     new_content = old_content.replace(old_text,new_text)
+            #
+            #     # write changes to the file
+            #     with open('todos.txt', 'w') as file:
+            #         file.writelines(new_content)
+            # else: # if requested to-do # does not exist
+            #     print(f"There's no todo with the number {num+1}. Please try again.")
+            #     continue
             confirm = input(f"Please type 'yes' (without quotes) to confirm that you really want to delete todo:\n{todos[n]}\nYou won't be able to restore it other then by typing again. > ").lower().strip()
             if confirm == "yes":
                 print(f"You have just completed your todo\n{todos[n]}\nIt has been successfully deleted from your todos list.")
