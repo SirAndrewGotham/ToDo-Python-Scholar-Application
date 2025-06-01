@@ -74,18 +74,18 @@ while True:
             if check_if_number(n) == True:
                 n = int(n)
                 # make it 1 number less due to indexes starting at 0
-                num = int(n)-1
+                index = int(n)-1
             else:
                 print("I can accept numbers only. Please try again.")
                 continue
-            # TODO - existance verification via function
             if check_exists(n) == True:
                 with open('todos.txt', 'r') as file: # open file for reading
                     todos = file.readlines()
+                    todo_to_remove = todos[index]
 
-                confirm = input(f"Please type 'yes' (without quotes) to confirm that you really want to delete todo:\n{todos[n-1].strip('\n')}\nYou won't be able to restore it other then by typing again. > ").lower().strip()
+                confirm = input(f"Please type 'yes' (without quotes) to confirm that you really want to delete todo:\n{todos[index].strip('\n')}\nYou won't be able to restore it other then by typing again. > ").lower().strip()
                 if confirm == "yes":
-                    print(f"You have just completed your todo\n{todos[n-1].strip('\n')}\nIt has been successfully deleted from your todos list.")
+                    print(f"You have just completed your todo\n{todo_to_remove.strip('\n')}\nIt has been successfully deleted from your todos list.")
                     todos.pop(n-1)
                     with open('todos.txt', 'w') as file:
                         file.writelines(todos)

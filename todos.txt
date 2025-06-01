@@ -1,5 +1,5 @@
-one new
+one
 two
-three new
+three
 new four
 five new
