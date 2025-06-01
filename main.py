@@ -18,13 +18,15 @@ while True:
         case 'add':
             todo = input("Enter a todo: ") + "\n"
 
-            with open('todos.txt', 'r') as file:
-                todos = file.readlines()
-
-            todos.append(todo)
-
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
+            # with open('todos.txt', 'r') as file:
+            #     todos = file.readlines()
+            #
+            # todos.append(todo)
+            #
+            # with open('todos.txt', 'w') as file:
+            #     file.writelines(todos)
+            with open('todos.txt', 'a') as file:
+                file.writelines(todo)
         case 'show':
             # show todos list
             print("Your todos so far:")
