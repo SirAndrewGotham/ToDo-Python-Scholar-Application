@@ -79,31 +79,19 @@ while True:
                 print("I can accept numbers only. Please try again.")
                 continue
             # TODO - existance verification via function
-            # if check_exists(n) == True:
-            #     with open('todos.txt', 'r') as file: # open file for reading
-            #         old_content = file.read() # full old content
-            #         old_text = old_content.splitlines()[num] # content of the requested line
-            #
-            #     # notice to the user, what is being edited
-            #     print(f"You are editing todo:\n{num+1}. {old_text}\n(todo number is not a part of your todo)")
-            #     # prompt for a new to-do content
-            #     new_text = input("What it should be now? ")
-            #     # replace old to-do with the new one
-            #     new_content = old_content.replace(old_text,new_text)
-            #
-            #     # write changes to the file
-            #     with open('todos.txt', 'w') as file:
-            #         file.writelines(new_content)
-            # else: # if requested to-do # does not exist
-            #     print(f"There's no todo with the number {num+1}. Please try again.")
-            #     continue
-            confirm = input(f"Please type 'yes' (without quotes) to confirm that you really want to delete todo:\n{todos[n]}\nYou won't be able to restore it other then by typing again. > ").lower().strip()
-            if confirm == "yes":
-                print(f"You have just completed your todo\n{todos[n]}\nIt has been successfully deleted from your todos list.")
-                todos.pop(n)
-            else:
-                print("You didn't confirm by typing 'yes' (without quotation marks), nothing has been deleted from your todos list.")
-            continue
+            if check_exists(n) == True:
+                with open('todos.txt', 'r') as file: # open file for reading
+                    todos = file.readlines()
+
+                confirm = input(f"Please type 'yes' (without quotes) to confirm that you really want to delete todo:\n{todos[n-1].strip('\n')}\nYou won't be able to restore it other then by typing again. > ").lower().strip()
+                if confirm == "yes":
+                    print(f"You have just completed your todo\n{todos[n-1].strip('\n')}\nIt has been successfully deleted from your todos list.")
+                    todos.pop(n-1)
+                    with open('todos.txt', 'w') as file:
+                        file.writelines(todos)
+                else:
+                    print("You didn't confirm by typing 'yes' (without quotation marks), nothing has been deleted from your todos list.")
+                continue
         # if user chooses to exit
         case 'exit':
             print("Goodbye!")

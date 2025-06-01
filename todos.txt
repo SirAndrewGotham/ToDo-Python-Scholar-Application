@@ -3,5 +3,3 @@ two
 three new
 new four
 five new
-6
-seven
