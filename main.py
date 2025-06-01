@@ -41,7 +41,6 @@ while True:
             for index, element in enumerate(todos):
                 print(f"{index+1}. {element.strip('\n')}")
         case "edit":
-            # qtty = len(file.readlines())
             # ask user about to-do to edit and take the input
             n = input("Which one? Give me the number of a todo: ")
             # verify that the input is of type int
@@ -55,20 +54,18 @@ while True:
                 continue
             # verify existence of the requested to-do
             if check_exists(n) == True:
-                with open('todos.txt', 'r') as file: # open file for reading
-                    old_content = file.read() # full old content
-                    old_text = old_content.splitlines()[num] # content of the requested line
-
-                # notice to the user, what is being edited
-                print(f"You are editing todo:\n{num+1}. {old_text}\n(todo number is not a part of your todo)")
+                with open('todos.txt', 'r') as file:
+                    todos = file.readlines() # read the "list"
+                    # notice to the user, what is being edited
+                print(f"You are editing todo:\n{num+1}. {todos[num].strip('\n')}\n(todo number is not a part of your todo)")
                 # prompt for a new to-do content
                 new_text = input("What it should be now? ")
                 # replace old to-do with the new one
-                new_content = old_content.replace(old_text,new_text)
+                todos[num] = new_text + '\n'
 
                 # write changes to the file
                 with open('todos.txt', 'w') as file:
-                    file.writelines(new_content)
+                    file.writelines(todos)
             else: # if requested to-do # does not exist
                 print(f"There's no todo with the number {num+1}. Please try again.")
                 continue
