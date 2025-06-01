@@ -16,7 +16,7 @@ while True:
     user_action = user_action[:user_action.find(' ')].lower() + user_action[user_action.find(' '):]
 
     # redirect user to a chosen action or warn about wrong command
-    if "add" in user_action:
+    if "add" in user_action or "new" in user_action:
         if user_action[4:] == '':
             todo = input("Enter a todo: ") + "\n"
         else:
@@ -24,7 +24,7 @@ while True:
 
         with open('todos.txt', 'a') as file:
             file.writelines(todo)
-    elif "show" in user_action:
+    elif "show" in user_action or "list" in user_action:
         # show todos list
         print("Your todos so far:")
 
