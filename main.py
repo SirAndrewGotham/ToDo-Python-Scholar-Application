@@ -3,25 +3,7 @@
 # Copyright Sir Andrew Gotham, 2025
 # https://github.com/SirAndrewGotham
 
-# a function to verify that user's input was an integer
-def check_if_number(n):
-    # verify that the input is of type int
-    try:
-        val = int(n)
-        return True
-    except ValueError:
-        # skip the action if input is not an integer with corresponding notice
-        # print("I can accept numbers only. Please try again.")
-        # continue
-        return False
-
-# a function to verify that requested todo exists
-def check_exists(n):
-    # check if the number provided corresponds to an existing index
-    if 0 <= num < len(todos):
-        return True
-    else:
-        return False
+from functions import check_if_number, check_exists
 
 # just for fun user prompt extracted to a variable
 user_prompt = 'Type "add", "show", "edit", "complete" or "exit": '
@@ -54,8 +36,11 @@ while True:
             file.close()
 
             # using the same for loop as before to be able to format output to the likings
+            # list comprehension to remove excessive carrier return at the end
+            # won;t use it here in favor of stripping elements directly in the for loop
+            # todos = [item.strip('\n') for item in todos]
             for index, element in enumerate(todos):
-                print(f"{index+1}. {element}", end='')
+                print(f"{index+1}. {element.strip('\n')}")
         case "edit":
             # ask user about to-do to edit and take the input
             n = input("Which one? Give me the number of a todo: ")
