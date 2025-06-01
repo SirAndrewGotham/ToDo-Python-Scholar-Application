@@ -5,7 +5,7 @@
 
 from functions import check_if_number, check_exists
 
-# just for fun user prompt extracted to a variable
+# just for fun user prompt with commands extracted to a variable
 user_prompt = 'Type "add", "show", "edit", "complete" or "exit": '
 
 # infinite loop, do not forget to exit! :)
@@ -42,11 +42,13 @@ while True:
             for index, element in enumerate(todos):
                 print(f"{index+1}. {element.strip('\n')}")
         case "edit":
+            # qtty = len(file.readlines())
             # ask user about to-do to edit and take the input
             n = input("Which one? Give me the number of a todo: ")
             # verify that the input is of type int
             # if user input is integer, goon with editing, else break with appropriate notification
             if check_if_number(n) == True:
+                n = int(n)
                 # make it 1 number less due to indexes starting at 0
                 num = int(n)-1
             else:
@@ -54,11 +56,27 @@ while True:
                 continue
             # verify existance of the requested to-do
             if check_exists(n) == True:
-                print(f"You are editing todo:\n{num+1}. {todos[num]}\n(todo number is not a part of your todo)")
-                todos[num] = input("What it should be now? ")
+                file = open('todos.txt', 'r') # open file for reading
+                old_content = file.read() # full old content
+                old_text = old_content.splitlines()[num] # content of the requested line
+                file.close() # close file after reading
+                # notice to the user, what is being edited
+                print(f"You are editing todo:\n{num+1}. {old_text}\n(todo number is not a part of your todo)")
+                # prompt for a new to-do content
+                new_text = input("What it should be now? ")
+                # replace old to-do with the new one
+                new_content = old_content.replace(old_text,new_text)
+                # write changes to the file
+                file = open('todos.txt', 'w')
+                file.writelines(new_content)
+                file.close()
+
+            # print(f"You are editing todo:\n{num+1}. {todos[num]}\n(todo number is not a part of your todo)")
+                # todos[num] = input("What it should be now? ")
+                # print(old_todos)
             else:
                 # if inserted number has no corresponding index, notify user and skip action
-                print(f"There's no todo with the number {num+1}. Please try again. > ")
+                print(f"There's no todo with the number {num+1}. Please try again.")
                 continue
         case 'complete':
             n = input(f"Which one todo you want to mark as read and delete from the list?\nPlease give me the number of a todo: ")

@@ -12,8 +12,13 @@ def check_if_number(n):
 
 # a function to verify that requested todo exists
 def check_exists(n):
+    file = open('todos.txt', 'r')
+    length = len(file.readlines())
+    file.close()
+    # print(type(n))
     # check if the number provided corresponds to an existing index
-    if 0 <= num < len(todos):
+    if 0 < n <= length:
+    # if 0 <= n < 1:
         return True
     else:
         return False
