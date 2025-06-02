@@ -3,10 +3,12 @@
 # Copyright Sir Andrew Gotham, 2025
 # https://github.com/SirAndrewGotham
 
-from functions import check_if_number, check_exists, get_todos
+from functions import check_if_number, check_exists, get_todos, write_todos
 
 # just for fun user prompt with commands extracted to a variable
-user_prompt = f'Please type "add", "show", "edit", "complete" or "exit" command.\nYou can add new items and edit or complete existing ones immediately by typing them right after the "add" or  "edit" command,\nall in one line, like so: "add New todo" or "edit 7" (for example).\nPlease make your choice now : '
+user_prompt = f'Please type "add", "show", "edit", "complete", "help" or "exit" command. : '
+
+filepath = 'todos.txt'
 
 # infinite loop, do not forget to exit! :)
 while True:
@@ -25,10 +27,10 @@ while True:
         with open('todos.txt', 'a') as file:
             file.writelines(todo)
     elif user_action.startswith("show") or user_action.startswith("list"):
-        # show todos list
+        # show to-dos list
         print("Your todos so far:")
 
-        todos = get_todos()
+        todos = get_todos(filepath)
 
         # using the same for loop as before to be able to format output to the likings
         # list comprehension to remove excessive carrier return at the end
@@ -55,7 +57,7 @@ while True:
             continue
         # verify existence of the requested to-do
         if check_exists(n):
-            todos = get_todos() # get them from file
+            todos = get_todos(filepath) # get them from file
                 # notice to the user, what is being edited
             print(f"You are editing todo:\n{num+1}. {todos[num].strip('\n')}\n(todo number is not a part of your todo)")
             # prompt for a new to-do content
@@ -64,8 +66,7 @@ while True:
             todos[num] = new_text + '\n'
 
             # write changes to the file
-            with open('todos.txt', 'w') as file:
-                file.writelines(todos)
+            write_todos(filepath, todos)
 
             print(f"Todo {num+1} changed successfully")
         else: # if requested to-do # does not exist
@@ -87,23 +88,28 @@ while True:
             print("I can accept numbers only to complete todos. Please try again.")
             continue
         if check_exists(n):
-            todos = get_todos()
+            todos = get_todos(filepath)
             todo_to_remove = todos[index]
 
             confirm = input(f"Please type 'yes' (without quotes) to confirm that you really want to delete todo:\n{todos[index].strip('\n')}\nYou won't be able to restore it other then by typing again. > ").lower().strip()
             if confirm == "yes":
                 print(f"You have just completed your todo\n{todo_to_remove.strip('\n')}\nIt has been successfully deleted from your todos list.")
                 todos.pop(n-1)
-                with open('todos.txt', 'w') as file:
-                    file.writelines(todos)
+
+                write_todos(filepath, todos)
             else:
                 print("You didn't confirm by typing 'yes' (without quotation marks), nothing has been deleted from your todos list.")
             continue
-    # if user chooses to exit
+    elif user_action == "help":
+        print()
+        print(f'The program accepts several commands typed in exactly and performs corresponding actions:\n- "add" or "new": to create new todo\n- "show" or "list": to display a list of existing todos\n- "edit": to edit an existing todo\n- "complete": to complete a todo and delete it from the list\n- "help": this help\n- "exit": to interrupt execution and exit the program.\nYou can add new items and edit or complete existing ones immediately by typing them right after the "add", "edit" or "complete" command, all in one line, like so: "add New todo" or "edit 7" (for example).')
+        print()
+        continue
+    # if a user chooses to exit
     elif user_action.startswith("exit"):
         print("Goodbye!")
         break
-    # if user types an unsupported command
+    # if a user types an unsupported command
     else:
         print('Wrong input, expected are "add", "show" or "exit", please try again.')
 
