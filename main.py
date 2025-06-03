@@ -8,8 +8,6 @@ from functions import check_if_number, check_exists, get_todos, write_todos
 # just for fun user prompt with commands extracted to a variable
 user_prompt = f'Please type "add", "show", "edit", "complete", "help" or "exit" command. : '
 
-filepath = 'todos.txt'
-
 # infinite loop, remember to exit at some point! :)
 while True:
     # take user input and strip out [possible] empty spaces, then convert to lower case
