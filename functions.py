@@ -17,11 +17,11 @@ def check_exists(n):
     else:
         return False
 
-def get_todos(filepath):
+def get_todos(filepath='todos.txt'):
     with open(filepath, 'r') as file_local:
         file_todos = file_local.readlines()
     return file_todos
 
-def write_todos(filepath, todos):
-    with open('todos.txt', 'w') as file:
-        file.writelines(todos)
+def write_todos(todos_local, filepath='todos.txt'):
+    with open(filepath, 'w') as file:
+        file.writelines(todos_local)

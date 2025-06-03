@@ -10,7 +10,7 @@ user_prompt = f'Please type "add", "show", "edit", "complete", "help" or "exit" 
 
 filepath = 'todos.txt'
 
-# infinite loop, do not forget to exit! :)
+# infinite loop, remember to exit at some point! :)
 while True:
     # take user input and strip out [possible] empty spaces, then convert to lower case
     user_action = input(user_prompt).strip()
@@ -30,7 +30,7 @@ while True:
         # show to-dos list
         print("Your todos so far:")
 
-        todos = get_todos(filepath='todos.txt')
+        todos = get_todos()
 
         # using the same for loop as before to be able to format output to the likings
         # list comprehension to remove excessive carrier return at the end
@@ -57,7 +57,7 @@ while True:
             continue
         # verify existence of the requested to-do
         if check_exists(n):
-            todos = get_todos(filepath='todos.txt') # get them from file
+            todos = get_todos() # get them from file
                 # notice to the user, what is being edited
             print(f"You are editing todo:\n{num+1}. {todos[num].strip('\n')}\n(todo number is not a part of your todo)")
             # prompt for a new to-do content
@@ -66,7 +66,7 @@ while True:
             todos[num] = new_text + '\n'
 
             # write changes to the file
-            write_todos(filepath='todos.txt', todos)
+            write_todos(todos_local=todos)
 
             print(f"Todo {num+1} changed successfully")
         else: # if requested to-do # does not exist
@@ -88,7 +88,7 @@ while True:
             print("I can accept numbers only to complete todos. Please try again.")
             continue
         if check_exists(n):
-            todos = get_todos(filepath='todos.txt')
+            todos = get_todos()
             todo_to_remove = todos[index]
 
             confirm = input(f"Please type 'yes' (without quotes) to confirm that you really want to delete todo:\n{todos[index].strip('\n')}\nYou won't be able to restore it other then by typing again. > ").lower().strip()
@@ -96,7 +96,7 @@ while True:
                 print(f"You have just completed your todo\n{todo_to_remove.strip('\n')}\nIt has been successfully deleted from your todos list.")
                 todos.pop(n-1)
 
-                write_todos(filepath='todos.txt', todos)
+                write_todos(todos_local=todos)
             else:
                 print("You didn't confirm by typing 'yes' (without quotation marks), nothing has been deleted from your todos list.")
             continue
