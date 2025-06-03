@@ -100,7 +100,19 @@ while True:
             continue
     elif user_action == "help":
         print()
-        print(f'The program accepts several commands typed in exactly and performs corresponding actions:\n- "add" or "new": to create new todo\n- "show" or "list": to display a list of existing todos\n- "edit": to edit an existing todo\n- "complete": to complete a todo and delete it from the list\n- "help": this help\n- "exit": to interrupt execution and exit the program.\nYou can add new items and edit or complete existing ones immediately by typing them right after the "add", "edit" or "complete" command, all in one line, like so: "add New todo" or "edit 7" (for example).')
+        print(
+            """
+            The program accepts several commands typed in exactly and performs corresponding actions:
+            - "add" or "new": to create new todo
+            - "show" or "list": to display a list of existing todos
+            - "edit": to edit an existing todo
+            - "complete": to complete a todo and delete it from the list
+            - "help": this help
+            - "exit": to interrupt execution and exit the program.
+            You can add new items and edit or complete existing ones immediately
+            by typing them right after the "add", "edit" or "complete" command, all in one line,
+            like so: "add New todo" or "edit 7" (for example).
+            """)
         print()
         continue
     # if a user chooses to exit
