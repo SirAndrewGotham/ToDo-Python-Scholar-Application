@@ -2,9 +2,20 @@
 # programmed by Sir. Andrew Gotham
 # Copyright Sir Andrew Gotham, 2025
 # https://github.com/SirAndrewGotham
+# encoding: utf-8
+"""
+This is a scholar To-do application written in Python.
+Initially developed as a command-line program, it might eventually grow
+to the one having Desktop, Web and Mobile interfaces/implementations.
+All in all, nothing special, just usual and trivial staff.
+I am learning on it! :)
+"""
 
+import time
 from functions import check_if_number, check_exists, get_todos, write_todos
 
+now = time.strftime('%b %d, %Y %H:%M:%S')
+print(f"Today is {time.strftime('%b %d, %Y %H:%M:%S')}")
 # just for fun user prompt with commands extracted to a variable
 user_prompt = f'Please type "add", "show", "edit", "complete", "help" or "exit" command. : '
 
@@ -97,6 +108,9 @@ while True:
                 write_todos(todos_local=todos)
             else:
                 print("You didn't confirm by typing 'yes' (without quotation marks), nothing has been deleted from your todos list.")
+            continue
+        else: # if requested to-do # does not exist
+            print(f"There's no todo with the number {n}. Please try again.")
             continue
     elif user_action == "help":
         print()
