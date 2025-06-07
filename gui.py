@@ -11,15 +11,17 @@ save_button = sg.Button("Save changes")
 complete_button = sg.Button("Complete todo")
 close_button = sg.Button("Close")
 
+layout = [
+    [label],
+    [input_box],
+    [add_button, save_button, complete_button],
+    # [pick_label],
+    [list_box],
+    [close_button]
+]
+
 window = sg.Window("My Scholar Python To-Do App",
-                    layout=[
-                        [label],
-                        [input_box],
-                        [add_button, save_button, complete_button],
-                        # [pick_label],
-                        [list_box],
-                        [close_button]
-                    ],
+                    layout=layout,
                     font=("Helvetica", 20))
 
 while True:
