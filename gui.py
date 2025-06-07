@@ -3,6 +3,14 @@ import time
 import functions
 import re
 import FreeSimpleGUI as sg
+import os
+
+# verify the existence of the todos.txt file
+if not os.path.exists("todos.txt"):
+    with open("todos.txt", "w") as todos_file:
+        pass
+
+
 
 # Choose a Theme for the Layout
 sg.theme('DarkTeal9')
@@ -10,11 +18,11 @@ sg.theme('DarkTeal9')
 clock = sg.Text("", key="clock")
 label = sg.Text("Type in your to-do or pick one from the list below for editing or completing")
 input_box = sg.InputText(tooltip="Enter a to-do", key="todo")
-list_box = sg.Listbox(values=functions.get_todos(), key="todos", enable_events=True, size=[65, 10])
+list_box = sg.Listbox(values=functions.get_todos(), key="todos", enable_events=True, size=(65, 10))
 add_button = sg.Button("Add new todo", key="add")
 save_button = sg.Button("Save changes", key="save")
 complete_button = sg.Button("Complete todo", key="complete")
-close_button = sg.Button("Close")
+close_button = sg.Button("Close", key="close")
 
 layout = [
     [clock],
@@ -80,7 +88,7 @@ while True:
                 sg.popup("Please select a todo to complete first.", font=("Helvetica", 20))
         case "todos":
             window['todo'].update(value=values['todos'][0])
-        case "Close":
+        case "close":
             break
         case sg.WIN_CLOSED:
             break
