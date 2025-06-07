@@ -1,12 +1,1 @@
-one
-two
-three
-new four
-five new
-new todo
-how it goes?
-Something Case Sensitive
-Another One Case sensitive
-A Very new ToDo
-Edited Todo
-My New todo
+Create GUI
