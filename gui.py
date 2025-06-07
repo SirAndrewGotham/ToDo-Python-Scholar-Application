@@ -26,29 +26,37 @@ window = sg.Window("My Scholar Python To-Do App",
 
 while True:
     event, values = window.read()
-    print(1, event)
-    print(2, values)
-    print(3, values["todos"])
-    print(4, values["todo"])
+    # print(1, event)
+    # print(2, values)
+    # print(3, values["todos"])
+    # print(4, values["todo"])
     match event:
         case "Add new todo":
-            todos = functions.get_todos()
-            new_todo = values['todo'] + "\n"
-            todos.append(new_todo)
-            functions.write_todos(todos)
-            window['todos'].update(values=todos)
+            if values['todo'] == '':
+                continue
+            else:
+                todos = functions.get_todos()
+                new_todo = values['todo'] + "\n"
+                todos.append(new_todo)
+                functions.write_todos(todos)
+                window['todos'].update(values=todos)
+                window['todo'].update(value='')
         case "Save changes":
             '''
             strip out duplicate while spaces using "re" library, get rid of the line breaks (in the middle of the file if any exists (old strings read from files have those), and add new line break at the end, then save to the file
             '''
-            todo_to_edit = values['todos'][0]
-            new_todo = values['todo']
+            if values['todo'] == '':
+                continue
+            else:
+                todo_to_edit = values['todos'][0]
+                new_todo = values['todo']
 
-            todos = functions.get_todos()
-            index = todos.index(todo_to_edit)
-            todos[index] = re.sub(' +', ' ', new_todo.replace('\n', ' ').replace('\r', '')) + "\n"
-            functions.write_todos(todos)
-            window['todos'].update(values=todos)
+                todos = functions.get_todos()
+                index = todos.index(todo_to_edit)
+                todos[index] = re.sub(' +', ' ', new_todo.replace('\n', ' ').replace('\r', '')) + "\n"
+                functions.write_todos(todos)
+                window['todos'].update(values=todos)
+                window['todo'].update(value='')
         case "Complete todo":
             todo_to_complete = values['todos'][0]
             todos = functions.get_todos()
@@ -56,6 +64,7 @@ while True:
             todos.pop(todo_to_remove)
             functions.write_todos(todos)
             window['todos'].update(values=todos)
+            window['todo'].update(value='')
         case "todos":
             window['todo'].update(value=values['todos'][0])
         case "Close":
