@@ -28,13 +28,12 @@ GUI app needs a python interpreter to run.
 
 ## Web app
 
-Web application uses five files:
+Web application uses four files:
 
 - web.py;
 - functions.py (containing the necessary functions and shared across all 3 apps)
 - todos.txt (text file with todos, will be created if not exists)
-- ...
-- ...
+- requirements.txt (libraries to install on the server list)
 
 Web application when started can be used via a browser with a local server address.
 
