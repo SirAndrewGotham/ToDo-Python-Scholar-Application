@@ -28,9 +28,11 @@ GUI app needs a python interpreter to run.
 
 ## Web app
 
-Web application uses four files:
+Web application uses six files:
 
-- web.py;
+- streamlit_app.py
+- pages/web.py
+- pages/about.py;
 - functions.py (containing the necessary functions and shared across all 3 apps)
 - todos.txt (text file with todos, will be created if not exists)
 - requirements.txt (libraries to install on the server list)
