@@ -2,6 +2,3 @@ Master Python
 Work on GUI
 Program Web
 Have a rest
-Try againAnd again
-And again
-Again, again,again
